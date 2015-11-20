@@ -520,7 +520,7 @@ namespace SuperSocket.SocketEngine
 
             var succeeded = 0;
 
-            foreach (var server in m_AppServers)
+            foreach (var server in m_AppServers.Where(s=>!s.Config.Disabled))
             {
                 if (!server.Start())
                 {
@@ -541,7 +541,7 @@ namespace SuperSocket.SocketEngine
 
             if (m_AppServers.Any())
             {
-                if (m_AppServers.Count == succeeded)
+                if (m_AppServers.Where(s => !s.Config.Disabled).Count() == succeeded)
                     result = StartResult.Success;
                 else if (succeeded == 0)
                     result = StartResult.Failed;
